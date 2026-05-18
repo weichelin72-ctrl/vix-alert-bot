@@ -23,4 +23,4 @@ price = vix.history(period="1d").Close.iloc[-1]
 print("Current VIX:", price)
 
 if price > THRESHOLD:
-    send_telegram(f"?? VIX ¶W¹L {THRESHOLD}\n¥Ø«e VIX: {price:.2f}")
+    send_telegram(f"⚠️ VIX 超過 {THRESHOLD}\n目前 VIX: {price:.2f}")
