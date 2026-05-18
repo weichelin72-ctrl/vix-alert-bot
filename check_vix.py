@@ -2,7 +2,7 @@ import os
 import requests
 import yfinance as yf
 
-THRESHOLD = 1
+THRESHOLD = 20
 
 BOT_TOKEN = os.environ["BOT_TOKEN"]
 CHAT_ID = os.environ["CHAT_ID"]
