@@ -2,7 +2,7 @@ import os
 import requests
 import yfinance as yf
 
-THRESHOLD = 25
+THRESHOLD = 1
 
 BOT_TOKEN = os.environ["BOT_TOKEN"]
 CHAT_ID = os.environ["CHAT_ID"]
@@ -23,4 +23,4 @@ price = vix.history(period="1d").Close.iloc[-1]
 print("Current VIX:", price)
 
 if price > THRESHOLD:
-    send_telegram(f"?? VIX �W�L {THRESHOLD}\n�ثe VIX: {price:.2f}")
+    send_telegram(f"?? VIX ¶W¹L {THRESHOLD}\n¥Ø«e VIX: {price:.2f}")
