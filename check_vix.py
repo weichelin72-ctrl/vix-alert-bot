@@ -59,8 +59,8 @@ send_telegram(
     f"TEST\nVIX: {vix_price:.2f}\n0050: {etf_price:.2f}"
 )
 
+# ===== crossing alert =====
 state = load_state()
-
 messages = []
 
 if vix_price > VIX_THRESHOLD:
