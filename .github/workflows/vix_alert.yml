@@ -2,7 +2,7 @@ name: VIX Alert
 
 on:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '*/5 * * * *'
 
   workflow_dispatch:
 
