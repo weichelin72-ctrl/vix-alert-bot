@@ -43,6 +43,6 @@ if etf_price < ETF_THRESHOLD:
     )
 
 # ===== Testing =====
-send(
+send_telegram(
     f"TEST\nVIX: {vix_price:.2f}\n0050: {etf_price:.2f}"
 )
