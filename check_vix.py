@@ -6,9 +6,9 @@ import yfinance as yf
 # real threshold
 VIX_THRESHOLD = 20
 ETF_THRESHOLD = 85
-# testing only
-VIX_THRESHOLD = 1
-ETF_THRESHOLD = 200
+# # testing only
+# VIX_THRESHOLD = 1
+# ETF_THRESHOLD = 200
 
 
 BOT_TOKEN = os.environ["BOT_TOKEN"]
