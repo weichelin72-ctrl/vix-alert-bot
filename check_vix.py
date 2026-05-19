@@ -78,7 +78,7 @@ else:
     state["etf_alerted"] = False
 
 if messages:
-    send(
+    send_telegram(
         "📊 市場警報\n\n" + "\n\n".join(messages)
     )
 
