@@ -1,7 +1,8 @@
 import os
 import requests
 import yfinance as yf
-
+import json
+import os
 
 # real threshold
 VIX_THRESHOLD = 20
@@ -13,6 +14,17 @@ ETF_THRESHOLD = 85
 
 BOT_TOKEN = os.environ["BOT_TOKEN"]
 CHAT_ID = os.environ["CHAT_ID"]
+
+STATE_FILE = "state.json"
+def load_state():
+    if os.path.exists(STATE_FILE):
+        with open(STATE_FILE, "r") as f:
+            return json.load(f)
+    return {"vix_alerted": False, "etf_alerted": False}
+
+def save_state(state):
+    with open(STATE_FILE, "w") as f:
+        json.dump(state, f)
 
 def send_telegram(msg):
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
@@ -46,3 +58,28 @@ if etf_price < ETF_THRESHOLD:
 send_telegram(
     f"TEST\nVIX: {vix_price:.2f}\n0050: {etf_price:.2f}"
 )
+
+state = load_state()
+
+messages = []
+
+if vix_price > VIX_THRESHOLD:
+    if not state["vix_alerted"]:
+        messages.append(f"⚠️ VIX > {VIX_THRESHOLD}\n現在：{vix_price:.2f}")
+        state["vix_alerted"] = True
+else:
+    state["vix_alerted"] = False
+
+if etf_price < ETF_THRESHOLD:
+    if not state["etf_alerted"]:
+        messages.append(f"📉 0050 < {ETF_THRESHOLD}\n現在：{etf_price:.2f}")
+        state["etf_alerted"] = True
+else:
+    state["etf_alerted"] = False
+
+if messages:
+    send(
+        "📊 市場警報\n\n" + "\n\n".join(messages)
+    )
+
+save_state(state)
