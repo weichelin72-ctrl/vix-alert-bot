@@ -20,7 +20,7 @@ def load_state():
     if os.path.exists(STATE_FILE):
         with open(STATE_FILE, "r") as f:
             return json.load(f)
-    return {"vix_alerted": False, "etf_alerted": False}
+    return {"vix_alerted": False, "etf_alerted": False, "rate_alerted": False}
 
 def save_state(state):
     with open(STATE_FILE, "w") as f:
