@@ -7,10 +7,11 @@ import os
 # real threshold
 VIX_THRESHOLD = 20
 ETF_THRESHOLD = 85
+rate_THRESHOLD = 31
 # # testing only
 # VIX_THRESHOLD = 1
 # ETF_THRESHOLD = 200
-rate_THRESHOLD = 50
+# rate_THRESHOLD = 50
 
 BOT_TOKEN = os.environ["BOT_TOKEN"]
 CHAT_ID = os.environ["CHAT_ID"]
