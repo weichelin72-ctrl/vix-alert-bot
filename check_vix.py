@@ -54,13 +54,13 @@ if etf_price < ETF_THRESHOLD:
         f"0050 低於 {ETF_THRESHOLD}\n目前 0050: {etf_price:.2f}"
     )
 
-# ===== Testing =====
+# ===== VIX and 0050 Testing =====
 send_telegram(
 #    f"TEST\nVIX: {vix_price:.2f}\n0050: {etf_price:.2f}"
     f"TEST:  VIX={vix_price:.2f}; 0050={etf_price:.2f}"
 )
 
-# ===== crossing alert =====
+# ===== VIX and 0050 crossing alert =====
 state = load_state()
 messages = []
 
@@ -84,3 +84,17 @@ if messages:
     )
 
 save_state(state)
+
+
+
+# ===== USD/NTD Testing =====
+url = "https://open.er-api.com/v6/latest/USD"
+response = requests.get(url, timeout=10)
+data = response.json()
+rate = data["rates"]["TWD"]
+
+send_telegram(
+    f"TEST:  1 USD = {rate:.2f} NTD"
+)
+
+
