@@ -10,7 +10,7 @@ ETF_THRESHOLD = 85
 # # testing only
 # VIX_THRESHOLD = 1
 # ETF_THRESHOLD = 200
-
+rate_THRESHOLD = 50
 
 BOT_TOKEN = os.environ["BOT_TOKEN"]
 CHAT_ID = os.environ["CHAT_ID"]
@@ -60,7 +60,17 @@ send_telegram(
     f"TEST:  VIX={vix_price:.2f}; 0050={etf_price:.2f}"
 )
 
-# ===== VIX and 0050 crossing alert =====
+# ===== USD/NTD Testing =====
+url = "https://open.er-api.com/v6/latest/USD"
+response = requests.get(url, timeout=10)
+data = response.json()
+rate = data["rates"]["TWD"]
+
+send_telegram(
+    f"TEST:  1 USD = {rate:.2f} NTD"
+)
+
+# ===== crossing alert =====
 state = load_state()
 messages = []
 
@@ -78,6 +88,14 @@ if etf_price < ETF_THRESHOLD:
 else:
     state["etf_alerted"] = False
 
+if rate < rate_THRESHOLD:
+    if not state["rate_alerted"]:
+        messages.append(f"📉 USD to NTD < {rate_THRESHOLD}\n現在：{rate:.2f}")
+        state["rate_alerted"] = True
+else:
+    state["rate_alerted"] = False
+
+
 if messages:
     send_telegram(
         "📊 市場警報\n\n" + "\n\n".join(messages)
@@ -87,14 +105,9 @@ save_state(state)
 
 
 
-# ===== USD/NTD Testing =====
-url = "https://open.er-api.com/v6/latest/USD"
-response = requests.get(url, timeout=10)
-data = response.json()
-rate = data["rates"]["TWD"]
 
-send_telegram(
-    f"TEST:  1 USD = {rate:.2f} NTD"
-)
+
+
+
 
 
