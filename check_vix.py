@@ -48,7 +48,15 @@ if vix_price > VIX_THRESHOLD:
 
 # ===== 0050 =====
 etf = yf.Ticker("0050.TW")
-etf_price = etf.history(period="1d").Close.iloc[-1]
+#etf_price = etf.history(period="1d").Close.iloc[-1]
+etf_hist = etf.history(period="5d", interval="1d")
+if etf_hist.empty or etf_hist["Close"].dropna().empty:
+    print("WARNING: 0050.TW no price data found")
+    etf_price = None
+else:
+    etf_price = float(etf_hist["Close"].dropna().iloc[-1])
+
+
 print("0050:", etf_price)
 if etf_price < ETF_THRESHOLD:
     send_telegram(
